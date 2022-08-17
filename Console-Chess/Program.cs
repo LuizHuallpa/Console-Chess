@@ -1,4 +1,6 @@
 ﻿using System;
+using Console_Chess.Tabuleiro;
+
 
 namespace Console_Chess
 {
