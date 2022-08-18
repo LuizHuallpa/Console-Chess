@@ -9,6 +9,9 @@ namespace Console_Chess
         {
             Board board = new Board(8, 8);
 
+            View.printBoard(board);
+            Console.ReadLine();
+
         }
     }
 }
