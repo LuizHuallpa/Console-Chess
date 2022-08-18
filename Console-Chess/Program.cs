@@ -1,6 +1,5 @@
 ﻿using System;
-using Console_Chess.Tabuleiro;
-
+using board;
 
 namespace Console_Chess
 {
@@ -8,7 +7,8 @@ namespace Console_Chess
     {
         static void Main(string[] args)
         {
-           
+            Board board = new Board(8, 8);
+
         }
     }
 }

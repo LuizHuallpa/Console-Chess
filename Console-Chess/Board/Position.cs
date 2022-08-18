@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
-namespace Console_Chess.Tabuleiro
+namespace board
 {
+
     class Position
     {
         public int Line { get; set; }
@@ -21,3 +20,6 @@ namespace Console_Chess.Tabuleiro
         }
     }
 }
+
+
+
