@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using board;
+using board.Enum;
 
 namespace Console_Chess
 {
@@ -10,17 +11,36 @@ namespace Console_Chess
         {
             for (int i = 0; i < board.Lines; i++)
             {
+                Console.Write($"{8 - i} ");
                 for (int j = 0; j < board.Columns; j++)
                 {
                     if (board.Piece(i, j) == null)
                         Console.Write("- ");
                     else
-                        Console.Write($"{board.Piece(i, j)} ");
+                    {
+                        View.printPiece(board.Piece(i, j));
+                        Console.Write(" ");
+                    }
+                       
                 }
                 Console.WriteLine();
             }
-            
+            Console.WriteLine("  A B C D E F G H");
         }
-       
+
+        public static void printPiece(Piece p)
+        {
+            if (p.Color == Colors.White)
+                Console.Write(p);
+            else
+            {
+                ConsoleColor aux = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(p);
+                Console.ForegroundColor = aux;
+            }
+
+
+        }
     }
 }
