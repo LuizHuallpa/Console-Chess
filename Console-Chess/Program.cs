@@ -12,15 +12,23 @@ namespace Console_Chess
         {
             try
             {
-                Board board = new Board(8, 8);
+                ChessMatch match = new ChessMatch();
+                while (!match.Finished)
+                {
+                    Console.Clear();
+                    View.printBoard(match.Bo);
+                    Console.WriteLine();
+                    Console.Write("Origin: ");
+                    Position origin = View.ReadChessPosition().toPosition();
+                    Console.Write("Destination: ");
+                    Position destination = View.ReadChessPosition().toPosition();
+
+                    match.ExecuteMovement(origin, destination);
+                }
+
+            
 
 
-                board.PutPiece(new Rook(board, Colors.Black), new Position(0, 0));
-                board.PutPiece(new Rook(board, Colors.Black), new Position(1, 3));
-                board.PutPiece(new King(board, Colors.White), new Position(2, 4));
-
-
-                View.printBoard(board);
                 Console.ReadLine();
 
             }

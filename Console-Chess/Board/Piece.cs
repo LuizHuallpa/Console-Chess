@@ -16,6 +16,14 @@ namespace board
             Moves = 0;
             Board = bo;
         }
+
+
+        public void IncrementMovement()
+        {
+            Moves++;
+        }
+
+
     }
 
 
