@@ -9,15 +9,15 @@ namespace chess
     class ChessMatch
     {
         public Board Bo { get; private set; }
-        private int Turn;
-        private Colors Player;
+        public int Turn { get; private set; }
+        public Colors CurrentPlayer { get; private set; }
         public bool Finished { get; private set; }
 
         public ChessMatch()
         {
             Bo = new Board(8, 8);
             Turn = 1;
-            Player = Colors.White;
+            CurrentPlayer = Colors.White;
             PutPieces();
         }
 
@@ -28,6 +28,40 @@ namespace chess
             Piece capturedPiece = Bo.TakePiece(destination);
             Finished = false;
             Bo.PutPiece(p, destination);
+        }
+
+
+
+        public void MakeThePlay(Position origin, Position destination)
+        {
+            ExecuteMovement(origin, destination);
+            Turn++;
+            ChangePlayer();
+        }
+
+
+        public void ValidateOriginPosition(Position pos)
+        {
+            if (Bo.Piece(pos) == null)
+                throw new BoardException("There is no piece in the chosen position");
+            if(CurrentPlayer != Bo.Piece(pos).Color)
+                throw new BoardException("The chosen piece is not yours");
+            if(!Bo.Piece(pos).CanMove())
+                throw new BoardException("There are no possible movements for this piece");
+        }
+
+        public void ValidateDestination(Position origin, Position destination)
+        {
+            if (!Bo.Piece(origin).CanMoveTo(destination))
+                throw new BoardException("Destination is not valid");
+        }
+
+        private void ChangePlayer()
+        {
+            if (CurrentPlayer == Colors.White)
+                CurrentPlayer = Colors.Black;
+            else
+                CurrentPlayer = Colors.White;
         }
 
         private void PutPieces()
