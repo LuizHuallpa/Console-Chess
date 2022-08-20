@@ -16,10 +16,18 @@ namespace Console_Chess
                 while (!match.Finished)
                 {
                     Console.Clear();
-                    View.printBoard(match.Bo);
+                    View.PrintBoard(match.Bo);
                     Console.WriteLine();
                     Console.Write("Origin: ");
                     Position origin = View.ReadChessPosition().toPosition();
+
+
+                    bool[,] possiblePosition = match.Bo.Piece(origin).PossibleMovements();
+
+                    Console.Clear();
+                    View.PrintBoard(match.Bo, possiblePosition);
+
+                    Console.WriteLine();
                     Console.Write("Destination: ");
                     Position destination = View.ReadChessPosition().toPosition();
 
