@@ -19,10 +19,7 @@ namespace Console_Chess
                     try
                     {
                         Console.Clear();
-                        View.PrintBoard(match.Bo);
-                        Console.WriteLine();
-                        Console.WriteLine($"Turn {match.Turn}");
-                        Console.WriteLine($"Waiting for the play: {match.CurrentPlayer}");
+                        View.PrintMatch(match);
 
 
 

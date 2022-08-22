@@ -8,6 +8,42 @@ namespace Console_Chess
 {
     class View
     {
+
+        public static void PrintMatch(ChessMatch match)
+        {
+            PrintBoard(match.Bo);
+            Console.WriteLine();
+            PrintCapturedPieces(match);
+            Console.WriteLine($"Turn {match.Turn}");
+            Console.WriteLine($"Waiting for the play: {match.CurrentPlayer}");
+        }
+
+        public static void PrintCapturedPieces(ChessMatch match)
+        {
+            Console.WriteLine($"Captured pieces");
+            Console.Write("White: ");
+            PrintGroup(match.CapturedPieces(Colors.White));
+            Console.WriteLine();
+            Console.Write("Black: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            PrintGroup(match.CapturedPieces(Colors.Black));
+            Console.ForegroundColor = aux;
+           Console.WriteLine();
+            Console.WriteLine();
+        }
+        
+        public static void PrintGroup(HashSet<Piece> group)
+        {
+            Console.Write("[");
+            foreach(Piece piece in group)
+            {
+                Console.Write($"{piece} ");
+            }
+            Console.Write("]");
+        }
+
+
         public static void PrintBoard(Board board)
         {
             for (int i = 0; i < board.Lines; i++)
