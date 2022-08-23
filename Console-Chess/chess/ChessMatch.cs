@@ -14,6 +14,7 @@ namespace chess
         public bool Finished { get; private set; }
         private HashSet<Piece> pieces;
         private HashSet<Piece> captured;
+        public bool Check { get; private set; }
 
         public ChessMatch()
         {
@@ -25,7 +26,7 @@ namespace chess
             PutPieces();
         }
 
-        public void ExecuteMovement(Position origin, Position destination)
+        public Piece ExecuteMovement(Position origin, Position destination)
         {
             Piece p = Bo.TakePiece(origin);
             p.IncrementMovement();
@@ -34,13 +35,40 @@ namespace chess
             Bo.PutPiece(p, destination);
             if (capturedPiece != null)
                 captured.Add(capturedPiece);
+
+            return capturedPiece;
         }
 
+        public void UnmakeTheMove(Position origin, Position destination, Piece capturedPiece)
+        {
+            Piece p = Bo.TakePiece(destination);
+            p.DecreaseMovement();
+
+            if(capturedPiece != null)
+            {
+                Bo.PutPiece(capturedPiece, destination);
+                captured.Remove(capturedPiece);
+            }
+            Bo.PutPiece(p, origin);
+
+        }
 
 
         public void MakeThePlay(Position origin, Position destination)
         {
-            ExecuteMovement(origin, destination);
+            Piece capturedPiece = ExecuteMovement(origin, destination);
+
+            if (IsinCheck(CurrentPlayer))
+            {
+                UnmakeTheMove(origin, destination, capturedPiece);
+                throw new BoardException("You cannot put yourself in check");
+            }
+
+            if (IsinCheck(Adversary(CurrentPlayer)))
+                Check = true;
+            else
+                Check = false;
+
             Turn++;
             ChangePlayer();
         }
@@ -50,9 +78,9 @@ namespace chess
         {
             if (Bo.Piece(pos) == null)
                 throw new BoardException("There is no piece in the chosen position");
-            if(CurrentPlayer != Bo.Piece(pos).Color)
+            if (CurrentPlayer != Bo.Piece(pos).Color)
                 throw new BoardException("The chosen piece is not yours");
-            if(!Bo.Piece(pos).CanMove())
+            if (!Bo.Piece(pos).CanMove())
                 throw new BoardException("There are no possible movements for this piece");
         }
 
@@ -73,7 +101,7 @@ namespace chess
         public HashSet<Piece> CapturedPieces(Colors color)
         {
             HashSet<Piece> aux = new HashSet<Piece>();
-            foreach(Piece piece in captured)
+            foreach (Piece piece in captured)
             {
                 if (piece.Color == color)
                     aux.Add(piece);
@@ -91,7 +119,44 @@ namespace chess
             }
             aux.ExceptWith(CapturedPieces(color));
             return aux;
+
         }
+
+        private Colors Adversary(Colors color)
+        {
+            if (color == Colors.White)
+                return Colors.Black;
+            else
+                return Colors.White;
+        }
+
+        private Piece King(Colors color)
+        {
+            foreach (Piece piece in PiecesInPlay(color))
+            {
+                if (piece is King)
+                    return piece;
+            }
+            return null;
+        }
+
+        public bool IsinCheck(Colors color)
+        {
+            foreach (Piece piece in PiecesInPlay(Adversary(color)))
+            {
+                Piece k = King(color);
+                if (k == null)
+                    throw new BoardException($"There is no King {color} in the board!");
+
+                bool[,] mat = piece.PossibleMovements();
+                if (mat[k.Position.Line, k.Position.Column])
+                    return true;
+
+            }
+
+            return false;
+        }
+
         public void PutNewPiece(char column, int line, Piece piece)
         {
             Bo.PutPiece(piece, new ChessPosition(column, line).toPosition());
