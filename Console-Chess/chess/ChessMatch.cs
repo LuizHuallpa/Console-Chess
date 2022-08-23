@@ -44,7 +44,7 @@ namespace chess
             Piece p = Bo.TakePiece(destination);
             p.DecreaseMovement();
 
-            if(capturedPiece != null)
+            if (capturedPiece != null)
             {
                 Bo.PutPiece(capturedPiece, destination);
                 captured.Remove(capturedPiece);
@@ -69,8 +69,14 @@ namespace chess
             else
                 Check = false;
 
-            Turn++;
-            ChangePlayer();
+
+            if (IsInCheckMate(Adversary(CurrentPlayer)))
+                Finished = true;
+            else
+            {
+                Turn++;
+                ChangePlayer();
+            }
         }
 
 
@@ -157,6 +163,36 @@ namespace chess
             return false;
         }
 
+        public bool IsInCheckMate(Colors color)
+        {
+            if (!IsinCheck(color))
+                return false;
+
+            foreach (Piece piece in PiecesInPlay(color))
+            {
+                bool[,] mat = piece.PossibleMovements();
+                for (int i = 0; i < Bo.Lines; i++)
+                {
+                    for (int j = 0; j < Bo.Columns; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Position origin = piece.Position;
+                            Position destination = new Position(i, j);
+                            Piece capturedPiece = ExecuteMovement(origin, destination);
+                            bool isInCheck = IsinCheck(color);
+                            UnmakeTheMove(origin, destination, capturedPiece);
+                            if (!isInCheck)
+                                return false;
+
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
         public void PutNewPiece(char column, int line, Piece piece)
         {
             Bo.PutPiece(piece, new ChessPosition(column, line).toPosition());
@@ -165,21 +201,26 @@ namespace chess
         private void PutPieces()
         {
 
-            PutNewPiece('c', 1, new Rook(Bo, Colors.White));
+            //PutNewPiece('c', 1, new Rook(Bo, Colors.White));
+            //PutNewPiece('c', 2, new Rook(Bo, Colors.White));
+            //PutNewPiece('d', 2, new Rook(Bo, Colors.White));
+            //PutNewPiece('e', 2, new Rook(Bo, Colors.White));
+            //PutNewPiece('e', 1, new Rook(Bo, Colors.White));
+            //PutNewPiece('d', 1, new King(Bo, Colors.White));
+
+            //PutNewPiece('c', 7, new Rook(Bo, Colors.Black));
+            //PutNewPiece('c', 8, new Rook(Bo, Colors.Black));
+            //PutNewPiece('d', 7, new Rook(Bo, Colors.Black));
+            //PutNewPiece('e', 7, new Rook(Bo, Colors.Black));
+            //PutNewPiece('e', 8, new Rook(Bo, Colors.Black));
+            //PutNewPiece('d', 8, new King(Bo, Colors.Black));
+
             PutNewPiece('c', 2, new Rook(Bo, Colors.White));
-            PutNewPiece('d', 2, new Rook(Bo, Colors.White));
-            PutNewPiece('e', 2, new Rook(Bo, Colors.White));
-            PutNewPiece('e', 1, new Rook(Bo, Colors.White));
             PutNewPiece('d', 1, new King(Bo, Colors.White));
+            PutNewPiece('h', 7, new Rook(Bo, Colors.White));
 
-            PutNewPiece('c', 7, new Rook(Bo, Colors.Black));
-            PutNewPiece('c', 8, new Rook(Bo, Colors.Black));
-            PutNewPiece('d', 7, new Rook(Bo, Colors.Black));
-            PutNewPiece('e', 7, new Rook(Bo, Colors.Black));
-            PutNewPiece('e', 8, new Rook(Bo, Colors.Black));
-            PutNewPiece('d', 8, new King(Bo, Colors.Black));
-
-
+            PutNewPiece('a', 8, new King(Bo, Colors.Black));
+            PutNewPiece('b', 8, new Rook(Bo, Colors.Black));
 
         }
 

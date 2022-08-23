@@ -41,17 +41,14 @@ namespace Console_Chess
 
                         match.MakeThePlay(origin, destination);
                     }
-                    catch(BoardException e)
+                    catch (BoardException e)
                     {
                         Console.WriteLine(e.Message);
                         Console.ReadLine();
                     }
                 }
-
-
-
-
-                Console.ReadLine();
+                Console.Clear();
+                View.PrintMatch(match);
 
             }
             catch (BoardException e)
