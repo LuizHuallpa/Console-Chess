@@ -36,6 +36,26 @@ namespace chess
             if (capturedPiece != null)
                 captured.Add(capturedPiece);
 
+            //#SPecia Move small castle
+            if(p is King && destination.Column == origin.Column + 2)
+            {
+                Position originR = new Position(origin.Line, origin.Column + 3);
+                Position destinationR = new Position(origin.Line, origin.Column + 1);
+                Piece T = Bo.TakePiece(originR);
+                T.IncrementMovement();
+                Bo.PutPiece(T, destinationR);
+            }
+
+            //#SPecia Move big castle
+            if (p is King && destination.Column == origin.Column - 2)
+            {
+                Position originR = new Position(origin.Line, origin.Column - 4);
+                Position destinationR = new Position(origin.Line, origin.Column - 1);
+                Piece T = Bo.TakePiece(originR);
+                T.IncrementMovement();
+                Bo.PutPiece(T, destinationR);
+            }
+
             return capturedPiece;
         }
 
@@ -50,6 +70,27 @@ namespace chess
                 captured.Remove(capturedPiece);
             }
             Bo.PutPiece(p, origin);
+
+
+            //#SPecia Move small castle
+            if (p is King && destination.Column == origin.Column + 2)
+            {
+                Position originR = new Position(origin.Line, origin.Column + 3);
+                Position destinationR = new Position(origin.Line, origin.Column + 1);
+                Piece T = Bo.TakePiece(destinationR);
+                T.DecreaseMovement();
+                Bo.PutPiece(T, originR);
+            }
+
+            //#SPecia Move big castle
+            if (p is King && destination.Column == origin.Column - 2)
+            {
+                Position originR = new Position(origin.Line, origin.Column - 4);
+                Position destinationR = new Position(origin.Line, origin.Column - 1);
+                Piece T = Bo.TakePiece(destinationR);
+                T.DecreaseMovement();
+                Bo.PutPiece(T, originR);
+            }
 
         }
 
@@ -206,7 +247,7 @@ namespace chess
             PutNewPiece('b', 1, new Knight(Bo, Colors.White));
             PutNewPiece('c', 1, new Bishop(Bo, Colors.White));
             PutNewPiece('d', 1, new Queen(Bo, Colors.White));
-            PutNewPiece('e', 1, new King(Bo, Colors.White));
+            PutNewPiece('e', 1, new King(Bo, Colors.White, this));
             PutNewPiece('f', 1, new Bishop(Bo, Colors.White));
             PutNewPiece('g', 1, new Knight(Bo, Colors.White));
             PutNewPiece('h', 1, new Rook(Bo, Colors.White));
@@ -224,7 +265,7 @@ namespace chess
             PutNewPiece('b', 8, new Knight(Bo, Colors.Black));
             PutNewPiece('c', 8, new Bishop(Bo, Colors.Black));
             PutNewPiece('d', 8, new Queen(Bo, Colors.Black));
-            PutNewPiece('e', 8, new King(Bo, Colors.Black));
+            PutNewPiece('e', 8, new King(Bo, Colors.Black, this));
             PutNewPiece('f', 8, new Bishop(Bo, Colors.Black));
             PutNewPiece('g', 8, new Knight(Bo, Colors.Black));
             PutNewPiece('h', 8, new Rook(Bo, Colors.Black));

@@ -35,38 +35,38 @@ namespace chess
             {
                 pos.DefineValues(Position.Line - 1, Position.Column);
                 if (Board.ValidPosition(pos) && IsEmpty(pos))
-                    mat[Position.Line, Position.Column] = true;
+                    mat[pos.Line, pos.Column] = true;
 
                 pos.DefineValues(Position.Line - 2, Position.Column);
                 if (Board.ValidPosition(pos) && IsEmpty(pos))
-                    mat[Position.Line, Position.Column] = true;
+                    mat[pos.Line, pos.Column] = true;
 
                 pos.DefineValues(Position.Line - 1, Position.Column - 1);
-                if (Board.ValidPosition(pos) && IsEmpty(pos))
-                    mat[Position.Line, Position.Column] = true;
+                if (Board.ValidPosition(pos) && ExistEnemy(pos))
+                    mat[pos.Line, pos.Column] = true;
 
                 pos.DefineValues(Position.Line - 1, Position.Column + 1);
-                if (Board.ValidPosition(pos) && IsEmpty(pos))
-                    mat[Position.Line, Position.Column] = true;
+                if (Board.ValidPosition(pos) && ExistEnemy(pos))
+                    mat[pos.Line, pos.Column] = true;
 
             }
             else
             {
                 pos.DefineValues(Position.Line + 1, Position.Column);
                 if (Board.ValidPosition(pos) && IsEmpty(pos))
-                    mat[Position.Line, Position.Column] = true;
+                    mat[pos.Line, pos.Column] = true;
 
                 pos.DefineValues(Position.Line + 2, Position.Column);
                 if (Board.ValidPosition(pos) && IsEmpty(pos))
-                    mat[Position.Line, Position.Column] = true;
+                    mat[pos.Line, pos.Column] = true;
 
                 pos.DefineValues(Position.Line + 1, Position.Column - 1);
-                if (Board.ValidPosition(pos) && IsEmpty(pos))
-                    mat[Position.Line, Position.Column] = true;
+                if (Board.ValidPosition(pos) && ExistEnemy(pos))
+                    mat[pos.Line, pos.Column] = true;
 
                 pos.DefineValues(Position.Line + 1, Position.Column + 1);
-                if (Board.ValidPosition(pos) && IsEmpty(pos))
-                    mat[Position.Line, Position.Column] = true;
+                if (Board.ValidPosition(pos) && ExistEnemy(pos))
+                    mat[pos.Line, pos.Column] = true;
             }
 
 

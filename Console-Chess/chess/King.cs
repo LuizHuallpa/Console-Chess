@@ -5,7 +5,12 @@ namespace chess
 {
     class King : Piece
     {
-        public King(Board bo, Colors color) : base(bo, color) { }
+
+        private ChessMatch Match;
+        public King(Board bo, Colors color, ChessMatch match) : base(bo, color)
+        {
+            Match = match;
+        }
 
         public override string ToString()
         {
@@ -16,6 +21,12 @@ namespace chess
         {
             Piece p = Board.Piece(pos);
             return p == null || p.Color != this.Color;
+        }
+
+        private bool CanCastleTest(Position pos)
+        {
+            Piece p = Board.Piece(pos);
+            return p != null && p is Rook && p.Color == Color && p.Moves == 0;
         }
 
         public override bool[,] PossibleMovements()
@@ -64,9 +75,41 @@ namespace chess
             if (Board.ValidPosition(pos) && CanMove(pos))
                 mat[pos.Line, pos.Column] = true;
 
-            return mat;
+
+            //##Special Move Castling
+
+            if (Moves == 0 && !Match.Check)
+            {
+                //small castle
+                Position posT1 = new Position(Position.Line, Position.Column + 3);
+                if (CanCastleTest(posT1))
+                {
+                    Position p1 = new Position(Position.Line, Position.Column + 1);
+                    Position p2 = new Position(Position.Line, Position.Column + 2);
+                    if(Board.Piece(p1) == null && Board.Piece(p2) == null)
+                    {
+                        mat[Position.Line, Position.Column + 2] = true;
+                    }
+                }
+                //Big castle
+                Position posT2 = new Position(Position.Line, Position.Column - 4);
+                if (CanCastleTest(posT2))
+                {
+                    Position p1 = new Position(Position.Line, Position.Column - 1);
+                    Position p2 = new Position(Position.Line, Position.Column - 2);
+                    Position p3 = new Position(Position.Line, Position.Column - 3);
+                    if (Board.Piece(p1) == null && Board.Piece(p2) == null && Board.Piece(p3) == null)
+                    {
+                        mat[Position.Line, Position.Column - 2] = true;
+                    }
+                }
+
+
+            }
+
+                return mat;
         }
-      
+
 
     }
 }
