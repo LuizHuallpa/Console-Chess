@@ -201,26 +201,46 @@ namespace chess
         private void PutPieces()
         {
 
-            //PutNewPiece('c', 1, new Rook(Bo, Colors.White));
-            //PutNewPiece('c', 2, new Rook(Bo, Colors.White));
-            //PutNewPiece('d', 2, new Rook(Bo, Colors.White));
-            //PutNewPiece('e', 2, new Rook(Bo, Colors.White));
-            //PutNewPiece('e', 1, new Rook(Bo, Colors.White));
-            //PutNewPiece('d', 1, new King(Bo, Colors.White));
 
-            //PutNewPiece('c', 7, new Rook(Bo, Colors.Black));
-            //PutNewPiece('c', 8, new Rook(Bo, Colors.Black));
-            //PutNewPiece('d', 7, new Rook(Bo, Colors.Black));
-            //PutNewPiece('e', 7, new Rook(Bo, Colors.Black));
-            //PutNewPiece('e', 8, new Rook(Bo, Colors.Black));
-            //PutNewPiece('d', 8, new King(Bo, Colors.Black));
+            PutNewPiece('a', 1, new Rook(Bo, Colors.White));
+            PutNewPiece('b', 1, new Knight(Bo, Colors.White));
+            PutNewPiece('c', 1, new Bishop(Bo, Colors.White));
+            PutNewPiece('d', 1, new Queen(Bo, Colors.White));
+            PutNewPiece('e', 1, new King(Bo, Colors.White));
+            PutNewPiece('f', 1, new Bishop(Bo, Colors.White));
+            PutNewPiece('g', 1, new Knight(Bo, Colors.White));
+            PutNewPiece('h', 1, new Rook(Bo, Colors.White));
+            PutNewPiece('a', 2, new Pawn(Bo, Colors.White));
+            PutNewPiece('b', 2, new Pawn(Bo, Colors.White));
+            PutNewPiece('c', 2, new Pawn(Bo, Colors.White));
+            PutNewPiece('d', 2, new Pawn(Bo, Colors.White));
+            PutNewPiece('e', 2, new Pawn(Bo, Colors.White));
+            PutNewPiece('f', 2, new Pawn(Bo, Colors.White));
+            PutNewPiece('g', 2, new Pawn(Bo, Colors.White));
+            PutNewPiece('h', 2, new Pawn(Bo, Colors.White));
 
-            PutNewPiece('c', 2, new Rook(Bo, Colors.White));
-            PutNewPiece('d', 1, new King(Bo, Colors.White));
-            PutNewPiece('h', 7, new Rook(Bo, Colors.White));
 
-            PutNewPiece('a', 8, new King(Bo, Colors.Black));
-            PutNewPiece('b', 8, new Rook(Bo, Colors.Black));
+            PutNewPiece('a', 8, new Rook(Bo, Colors.Black));
+            PutNewPiece('b', 8, new Knight(Bo, Colors.Black));
+            PutNewPiece('c', 8, new Bishop(Bo, Colors.Black));
+            PutNewPiece('d', 8, new Queen(Bo, Colors.Black));
+            PutNewPiece('e', 8, new King(Bo, Colors.Black));
+            PutNewPiece('f', 8, new Bishop(Bo, Colors.Black));
+            PutNewPiece('g', 8, new Knight(Bo, Colors.Black));
+            PutNewPiece('h', 8, new Rook(Bo, Colors.Black));
+            PutNewPiece('a', 7, new Pawn(Bo, Colors.Black));
+            PutNewPiece('b', 7, new Pawn(Bo, Colors.Black));
+            PutNewPiece('c', 7, new Pawn(Bo, Colors.Black));
+            PutNewPiece('d', 7, new Pawn(Bo, Colors.Black));
+            PutNewPiece('e', 7, new Pawn(Bo, Colors.Black));
+            PutNewPiece('f', 7, new Pawn(Bo, Colors.Black));
+            PutNewPiece('g', 7, new Pawn(Bo, Colors.Black));
+            PutNewPiece('h', 7, new Pawn(Bo, Colors.Black));
+
+
+
+
+
 
         }
 
