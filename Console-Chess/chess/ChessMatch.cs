@@ -92,7 +92,7 @@ namespace chess
 
         public void ValidateDestination(Position origin, Position destination)
         {
-            if (!Bo.Piece(origin).CanMoveTo(destination))
+            if (!Bo.Piece(origin).PossibleMovement(destination))
                 throw new BoardException("Destination is not valid");
         }
 
