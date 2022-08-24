@@ -140,12 +140,30 @@ namespace chess
         public void MakeThePlay(Position origin, Position destination)
         {
             Piece capturedPiece = ExecuteMovement(origin, destination);
+            Piece p = Bo.Piece(destination);
 
             if (IsinCheck(CurrentPlayer))
             {
                 UnmakeTheMove(origin, destination, capturedPiece);
                 throw new BoardException("You cannot put yourself in check");
             }
+
+            
+
+
+            //#Special play Queening
+            if(p is Pawn)
+            {
+                if (p.Color == Colors.White && destination.Line == 0 || p.Color == Colors.Black && destination.Line == 0)
+                {
+                    p = Bo.TakePiece(destination);
+                    pieces.Remove(p);
+                    Piece queen = new Queen(Bo, p.Color);
+                    Bo.PutPiece(queen, destination);
+                    pieces.Add(queen);
+                }
+            }
+
 
             if (IsinCheck(Adversary(CurrentPlayer)))
                 Check = true;
@@ -161,7 +179,7 @@ namespace chess
                 ChangePlayer();
             }
 
-            Piece p = Bo.Piece(destination);
+      
 
             //#Special play Een passant
             if (p is Pawn && (destination.Line == origin.Line - 2 || destination.Line == origin.Line + 2))
